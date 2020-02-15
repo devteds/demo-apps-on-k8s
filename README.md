@@ -2,6 +2,8 @@
 
 Follows micro-services approach. Run locally using docker-compose and traefik as loadbalancer/proxy; and on Kubernetes (DigitalOcean Managed).
 
+![DemoStoreAppArchitecture](https://github.com/devteds/demo-app-bookstore/blob/master/doc/demo-app-architecture.png)
+
 ## Code directory
 
 ```
