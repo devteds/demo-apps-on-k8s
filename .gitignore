@@ -1,0 +1,7 @@
+infra/secret.auto.tfvars
+tmp*
+tmp/*
+temp
+**/terraform.tfstate
+**/terraform.tfstate*
+**/.terraform

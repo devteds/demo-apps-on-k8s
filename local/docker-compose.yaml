@@ -1,0 +1,66 @@
+version: '3'
+
+services:
+
+  website:
+    image: devteds/demo-bookstore-website:1.0
+    # ports:
+    #   - 8082:80
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.website.rule=PathPrefix(`/`)
+      - traefik.http.routers.website.entrypoints=web
+      - traefik.http.services.website.loadbalancer.server.port=80
+      
+  shopui:
+    image: devteds/demo-bookstore-shopui:1.0
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.shopui.rule=PathPrefix(`/shop`)
+      - traefik.http.routers.shopui.entrypoints=web
+      - traefik.http.services.shopui.loadbalancer.server.port=80    
+
+  shopapi:
+    image: devteds/demo-bookstore-shopapi:1.0
+    environment:
+      DB_HOST: db
+      DB_NAME: bookstore
+      DB_USER: appuser
+      DB_PASSWORD: appuser123
+      RAILS_ENV: production
+      RAILS_LOG_TO_STDOUT: "1"
+    # ports:
+    #   - 3100:3000
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.shopapi.rule=PathPrefix(`/api`)
+      - traefik.http.routers.shopapi.entrypoints=web
+      - traefik.http.services.shopapi.loadbalancer.server.port=3000
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: bookstore
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: appuser123
+
+  proxy:
+    image: "traefik:v2.1.2"
+    command: 
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--providers.docker.network=demoapp"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  default:
+    external:
+      name: demoapp

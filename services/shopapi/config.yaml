@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: shopapi-cm
+
+data:
+  DB_HOST: bookstore-mysql
+  DB_NAME: bookstore
+  DB_USER: appuser
+  RAILS_ENV: production
+  RAILS_LOG_TO_STDOUT: "1"

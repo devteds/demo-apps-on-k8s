@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopapi
+spec:
+  selector:
+    matchLabels:
+      app: shopapi
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: shopapi
+    spec:
+      containers:
+      - name: shopapi
+        image: devteds/demo-bookstore-shopapi:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: secret-vol
+          mountPath: /app/config/app_secret        
+        envFrom:
+        - configMapRef:
+            name: shopapi-cm
+      volumes:
+        - name: secret-vol
+          secret:
+            secretName: shopapi-sec
