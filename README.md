@@ -2,6 +2,9 @@
 
 Follows micro-services approach. Run locally using docker-compose and traefik as loadbalancer/proxy; and on Kubernetes (DigitalOcean Managed).
 
+> ## Announcement: Course on Kubernetes
+> If you're want to start deploying your containers to Kubernetes, especially on AWS EKS, [check this course on Kubernetes](https://courses.devteds.com/kubernetes-get-started) that walkthrough creating Kubernetes cluster on AWS EKS using Terraform and deploying multiple related containers applications to Kubernetes and more. https://courses.devteds.com/kubernetes-get-started
+
 ![DemoStoreAppArchitecture](https://github.com/devteds/demo-app-bookstore/blob/master/doc/demo-app-architecture.png)
 
 ## Code directory
